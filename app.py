@@ -3,7 +3,7 @@ from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from feedback import FeedbackForm
 from flask_bootstrap import Bootstrap
-from flask import Flask, request, redirect, url_for, render_template
+from flask import Flask, request, redirect, url_for, render_template, make_response
 import os
 import base64
 
@@ -17,7 +17,10 @@ Bootstrap(app)
 def hello():
     feedback = request.cookies.get('test')
     if feedback:
-        return decrypt(feedback)
+        try:
+            return decrypt(feedback)
+        except Exception as e:
+            return make_response("Error: {0}".format(e), 500)
     return "Hello World!"
 
 
