@@ -1,10 +1,12 @@
-from flask import Flask, request, redirect, url_for, render_template
 from feedback import FeedbackForm
+from flask_bootstrap import Bootstrap
+from flask import Flask, request, redirect, url_for, render_template
 import os
 
 app = Flask(__name__)
 app.config.from_object(
     os.environ.get('APP_SETTINGS') or 'config.DevelopmentConfig')
+Bootstrap(app)
 
 
 @app.route("/")
