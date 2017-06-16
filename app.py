@@ -2,13 +2,15 @@ from flask import Flask, request, redirect, url_for, render_template
 from feedback import FeedbackForm
 import os
 
-
 app = Flask(__name__)
-app.config.from_object(os.environ.get('APP_SETTINGS') or 'config.DevelopmentConfig')
+app.config.from_object(
+    os.environ.get('APP_SETTINGS') or 'config.DevelopmentConfig')
+
 
 @app.route("/")
 def hello():
     return "Hello World!"
+
 
 @app.route("/feedback", methods=["GET", "POST"])
 def set_data():
@@ -18,6 +20,7 @@ def set_data():
         response.set_cookie("test", "blah")
         return response
     return render_template('index.html', form=form)
+
 
 if __name__ == '__main__':
     import logging
