@@ -1,8 +1,10 @@
-from flask import Flask
+from flask import Flask, request, redirect, url_for, render_template
 from feedback import FeedbackForm
+import os
 
 
 app = Flask(__name__)
+app.config.from_object(os.environ.get('APP_SETTINGS') or 'config.DevelopmentConfig')
 
 @app.route("/")
 def hello():
@@ -10,7 +12,7 @@ def hello():
 
 @app.route("/feedback", methods=["GET", "POST"])
 def set_data():
-    form = LoginForm(request.form)
+    form = FeedbackForm(request.form)
     if form.validate_on_submit():
         response = redirect(url_for("hello"))
         response.set_cookie("test", "blah")
