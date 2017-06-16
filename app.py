@@ -30,10 +30,12 @@ def set_data():
         return response
     return render_template('index.html', form=form)
 
+
 def get_cipher(iv):
     backend = default_backend()
     key = app.config['KEY']
     return Cipher(algorithms.AES(key), modes.CBC(iv), backend=backend)
+
 
 def encrypt(text):
     bytes = text.encode('utf-8')
@@ -47,6 +49,7 @@ def encrypt(text):
     ct = iv + encryptor.update(padded_data) + encryptor.finalize()
 
     return base64.b64encode(ct)
+
 
 def decrypt(data):
     encoded = base64.b64decode(data)
